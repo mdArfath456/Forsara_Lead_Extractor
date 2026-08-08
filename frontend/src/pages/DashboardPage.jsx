@@ -14,13 +14,15 @@ export default function DashboardPage() {
   if (isError) return <ErrorState onRetry={refetch} />;
 
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="w-full min-w-0 space-y-6">
+      <div className="min-w-0">
         <h1 className="text-xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-gray-500">Overview of lead extraction performance and active tasks.</p>
+        <p className="max-w-full text-sm leading-6 text-gray-500">
+          Overview of lead extraction performance and active tasks.
+        </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <StatCard index={0} label="Projects" value={data.totalProjects} icon={FolderKanban} />
         <StatCard index={1} label="Total leads" value={data.totalLeads} icon={Users} />
         <StatCard index={2} label="Recent searches" value={data.recentSearches.length} icon={SearchIcon} />
@@ -29,12 +31,12 @@ export default function DashboardPage() {
 
       <div>
         <h2 className="text-sm font-medium text-gray-400 mb-2">Recent searches</h2>
-        <div className="rounded-2xl glass-panel divide-y divide-white/[0.06]">
+        <div className="min-w-0 rounded-2xl glass-panel divide-y divide-white/[0.06]">
           {data.recentSearches.length === 0 && <p className="p-4 text-sm text-gray-500">No searches yet.</p>}
           {data.recentSearches.map((s) => (
-            <div key={s._id} className="p-3.5 text-sm flex justify-between">
-              <span className="text-gray-300">{s.providerUsed}</span>
-              <span className="text-gray-500">{s.resultCount} results</span>
+            <div key={s._id} className="flex min-w-0 items-center justify-between gap-3 p-3.5 text-sm">
+              <span className="min-w-0 truncate text-gray-300">{s.providerUsed}</span>
+              <span className="shrink-0 text-gray-500">{s.resultCount} results</span>
             </div>
           ))}
         </div>

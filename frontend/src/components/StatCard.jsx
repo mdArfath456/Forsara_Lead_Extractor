@@ -6,12 +6,12 @@ export function StatCard({ label, value, icon: Icon, index = 0 }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.25 }}
-      className="rounded-2xl glass-panel glass-panel-hover p-5"
+      className="min-w-0 rounded-2xl glass-panel glass-panel-hover p-4 sm:p-5"
     >
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-400">{label}</span>
+      <div className="flex min-w-0 items-start justify-between gap-2">
+        <span className="min-w-0 text-sm leading-5 text-gray-400">{label}</span>
         {Icon && (
-          <div className="w-8 h-8 rounded-lg bg-brand-gradient/20 flex items-center justify-center">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-gradient/20">
             <Icon size={16} className="text-brand-400" />
           </div>
         )}

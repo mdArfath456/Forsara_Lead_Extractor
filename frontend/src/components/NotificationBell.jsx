@@ -48,7 +48,7 @@ export function NotificationBell() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto rounded-2xl glass-panel z-50 p-2"
+              className="absolute right-0 z-50 mt-2 max-h-96 w-[calc(100vw-1.5rem)] max-w-80 overflow-y-auto rounded-2xl glass-panel p-2"
             >
               {(data?.notifications || []).length === 0 ? (
                 <p className="text-sm text-gray-500 p-4 text-center">No notifications yet.</p>

@@ -27,7 +27,7 @@ export function AppLayout() {
   }, [location.pathname]);
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full w-full min-w-0 overflow-hidden">
       {/* Desktop sidebar — hidden below md breakpoint */}
       <aside className="hidden md:flex w-64 shrink-0 m-3 mr-0 rounded-2xl glass-panel flex-col overflow-hidden">
         <Brand />
@@ -36,7 +36,7 @@ export function AppLayout() {
       </aside>
 
       {/* Mobile/tablet top bar — hidden at md and above */}
-      <div className="md:hidden fixed top-3 inset-x-3 z-40 flex items-center justify-between px-4 py-3 rounded-2xl glass-panel">
+      <div className="md:hidden fixed top-3 inset-x-3 z-40 flex min-w-0 items-center justify-between gap-2 px-3 py-3 rounded-2xl glass-panel">
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
@@ -44,13 +44,13 @@ export function AppLayout() {
         >
           <Menu size={18} />
         </button>
-        <div className="flex items-center gap-2 text-sm font-semibold">
+        <div className="flex min-w-0 items-center gap-2 text-sm font-semibold">
           <div className="w-6 h-6 rounded-md bg-brand-gradient flex items-center justify-center">
             <Sparkles size={12} className="text-white" />
           </div>
-          Forsara
+          <span className="truncate">Forsara</span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1">
           <NotificationBell />
           <ThemeToggle />
         </div>
@@ -92,7 +92,7 @@ export function AppLayout() {
         )}
       </AnimatePresence>
 
-      <main className="flex-1 overflow-y-auto p-4 pt-20 md:p-6">
+      <main className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-3 pb-4 pt-20 sm:px-4 md:p-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}

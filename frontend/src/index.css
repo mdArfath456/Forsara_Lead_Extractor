@@ -27,6 +27,8 @@ html.light {
 }
 
 body {
+  min-width: 0;
+  overflow-x: hidden;
   background-color: var(--surface-bg);
   color: var(--text-primary);
   background-image:
@@ -34,6 +36,11 @@ body {
     radial-gradient(ellipse 80% 50% at 100% 100%, rgba(168, 85, 247, 0.08), transparent);
   background-attachment: fixed;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#root {
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 @layer components {
