@@ -3,11 +3,12 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    chunkSizeWarningLimit: 1000, // raise from default 500kb — expected given Leaflet/Recharts/Framer Motion
+  },
   server: {
     port: 5173,
     proxy: {
-      // Keeps the frontend talking to '/api/...' in dev without CORS friction;
-      // production deploy points this at the real backend origin instead.
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
