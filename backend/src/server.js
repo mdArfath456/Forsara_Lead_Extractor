@@ -1,3 +1,4 @@
+import MongoStore from 'connect-mongo';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -34,10 +35,15 @@ async function main() {
       secret: env.sessionSecret,
       resave: false,
       saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: env.mongoUri,
+        collectionName: 'sessions', // separate from your app collections, auto-created
+        ttl: 60 * 60 * 8, // 8h — matches cookie maxAge below, in seconds not ms
+      }),
       cookie: {
         httpOnly: true,
-        secure: env.nodeEnv === 'production', // required for sameSite:'none' — cookie rejected otherwise
-        sameSite: env.nodeEnv === 'production' ? 'none' : 'lax', // 'none' needed cross-domain even behind the Vercel rewrite
+        secure: env.nodeEnv === 'production',
+        sameSite: env.nodeEnv === 'production' ? 'none' : 'lax',
         maxAge: 1000 * 60 * 60 * 8, // 8h — internal staff workday session
       },
     })
