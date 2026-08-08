@@ -36,8 +36,8 @@ async function main() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: isProd,
-        sameSite: isProd ? 'none' : 'lax',
+        secure: env.nodeEnv === 'production', // required for sameSite:'none' — cookie rejected otherwise
+        sameSite: env.nodeEnv === 'production' ? 'none' : 'lax', // 'none' needed cross-domain even behind the Vercel rewrite
         maxAge: 1000 * 60 * 60 * 8, // 8h — internal staff workday session
       },
     })

@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// Always relative — in dev the Vite proxy handles this (vite.config.js), in
+// production vercel.json rewrites /api/* to the Render backend. This keeps
+// every request same-origin from the browser's perspective, which avoids
+// CORS preflight complexity and keeps cookies first-party.
 export const apiClient = axios.create({
   baseURL: '/api',
   withCredentials: true, // session cookie auth, per backend design
