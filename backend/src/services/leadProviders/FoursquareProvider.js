@@ -2,7 +2,8 @@ import axios from 'axios';
 import { LeadProvider } from './LeadProvider.interface.js';
 import { env } from '../../config/env.js';
 
-const SEARCH_URL = 'https://api.foursquare.com/v3/places/search';
+const SEARCH_URL = 'https://places-api.foursquare.com/places/search';
+const API_VERSION = '2025-06-17'; // required header — legacy v3 endpoints were retired May 15, 2026
 
 export class FoursquareProvider extends LeadProvider {
   key = 'foursquare';
@@ -16,7 +17,11 @@ export class FoursquareProvider extends LeadProvider {
     const near = [params.city, params.state, params.country].filter(Boolean).join(', ');
 
     const response = await axios.get(SEARCH_URL, {
-      headers: { Authorization: env.foursquareApiKey, Accept: 'application/json' },
+      headers: {
+        Authorization: `Bearer ${env.foursquareApiKey}`, // new API uses Bearer auth, not the raw key header the old one used
+        'X-Places-Api-Version': API_VERSION,
+        Accept: 'application/json',
+      },
       params: {
         query: query || undefined,
         near: near || undefined,
@@ -28,7 +33,4 @@ export class FoursquareProvider extends LeadProvider {
 
     return response.data?.results || [];
   }
-
-  // Foursquare's free tier doesn't include verified contact enrichment —
-  // Apollo remains the enrichment provider.
 }

@@ -1,8 +1,3 @@
-/**
- * Single choke point that maps a provider's raw response into the fields
- * the Lead model expects. Adding a new discovery provider means adding one
- * case here — nothing else in the app needs to change.
- */
 export function normalizeLead(source, raw, context = {}) {
   switch (source) {
     case 'google_places':
@@ -76,22 +71,21 @@ function normalizeOverpassElement(raw, context) {
 
 function normalizeFoursquarePlace(raw, context) {
   const loc = raw.location || {};
-  const latlon = raw.geocodes?.main;
-
   return {
     businessName: raw.name || 'Unknown',
     industry: context.industry,
     category: raw.categories?.[0]?.name,
     phone: raw.tel,
+    email: raw.email, // the new API returns this directly — the old v3 endpoint never did
     website: raw.website,
-    address: loc.formatted_address || loc.address,
+    address: loc.address,
     city: loc.locality,
     state: loc.region,
     country: loc.country,
     postalCode: loc.postcode,
-    location: latlon ? { type: 'Point', coordinates: [latlon.longitude, latlon.latitude] } : undefined,
+    location: raw.latitude && raw.longitude ? { type: 'Point', coordinates: [raw.longitude, raw.latitude] } : undefined,
     source: 'foursquare',
-    enrichmentStatus: 'none',
+    enrichmentStatus: raw.email ? 'enriched' : 'none', // email may already be present straight from discovery now
     projectId: context.projectId,
     dedupeKey: buildDedupeKey(raw.name, loc.locality, loc.postcode),
   };
